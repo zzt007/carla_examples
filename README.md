@@ -15,3 +15,6 @@ multi_scenario : the main proceessing file of scenario 3\4\5\6 demo, not a batch
 1. add the scenario 3~6 demo
 2. add the batch processing script for scenario 1&2
 
+### 2024.12.03
+1. use Traffic Manager to set up background vehicles, for a single processing 
+2. batch processing the scenario 1&2 , and record the demo video 
