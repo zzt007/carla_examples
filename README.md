@@ -18,3 +18,7 @@ multi_scenario : the main proceessing file of scenario 3\4\5\6 demo, not a batch
 ### 2024.12.03
 1. use Traffic Manager to set up background vehicles, for a single processing 
 2. batch processing the scenario 1&2 , and record the demo video 
+
+### 2024.12.04
+1. add the batch processing script for scenario 4 
+2. attention : it just change on the origin code, and you just need to open the batch process mode in the argparse
