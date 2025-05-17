@@ -7,7 +7,7 @@ import time
 import pandas as pd
 
 # 定义要运行的脚本路径
-script_path = 'D:\\Carla\\CARLA_0.9.15\\WindowsNoEditor\\PythonAPI\\examples\\batchProcessing.py'
+script_path = 'D:\\Carla\\CARLA_0.9.15\\WindowsNoEditor\\PythonAPI\\examples\\carla_examples\\batchProcessing_4cars.py'
 
 # 定义要读取的Excel文件路径
 excel_path = 'D:\\Carla\\CARLA_0.9.15\\WindowsNoEditor\\PythonAPI\\examples\\TestCase_0923.xlsx' 
@@ -30,7 +30,7 @@ except KeyError as e:
 NUM_RUNS = 111 # 手动设置次数，这里是所有有效测试行数减去开头四行 ，在0923中，是116- 4 -1 =111,减1是因为索引从0开始
 
 # 定义每次运行之间的间隔时间（秒）
-INTERVAL = 10
+INTERVAL = 5
 
 for i in range(NUM_RUNS):
     # 读取指定列数据

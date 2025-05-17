@@ -166,11 +166,6 @@ try:
     SUR1_Y = 87.69
     SUR1_YAW = 0
     
-    SUR2_VEHICLE_SPEED_LON = 4.50 # SUR2 ： left-rear vehicle
-    SUR2_VEHICLE_SPEED_LAT = 0.05
-    SUR2_X = 484.71
-    SUR2_Y = 87.69
-    SUR2_YAW = 0
     
     IS_ARRIVE_DESTINATION = False # use final location replace it, fix me!
     IS_USE_SPECTATOR = False
@@ -182,8 +177,6 @@ try:
     SUR1_VEHICLE_X = params[2]
     SUR1_VEHICLE_Y = params[3]
     
-    SUR2_VEHICLE_X = params[4]
-    SUR2_VEHICLE_Y = params[5]
     
     
     
@@ -192,20 +185,15 @@ try:
     ego_spawn_point = spawn_points[0]
     
     sur1_spawn_point = spawn_points[1] 
+    # 在一个固定出生点附近增加offset，以达到生成多组参数的目的
     sur1_spawn_point = spawn_sur_vehicle_by_offset(sur1_spawn_point, carla.Location(x=SUR1_VEHICLE_X, 
                                                                                         y=SUR1_VEHICLE_Y, 
                                                                                         z=0))
     # spawn the ego vehicle and sur vehicle 
     ego_vehicle = spawn_vehicle_by_point(ego_spawn_point,'255,255,255') # 白色是主车
-    sur1_vehicle = spawn_vehicle_by_point(sur1_spawn_point,'0,0,0') 
+    sur1_vehicle = spawn_vehicle_by_point(sur1_spawn_point,'0,0,0')  # 黑色周车，如果直接用出生点，就不用spawn_sur_vehicle_by_offset函数了；否则解开注释
 
 
-    sur2_offset = carla.Location(x=SUR2_VEHICLE_X, 
-                                 y=SUR2_VEHICLE_Y, 
-                                 z=0)
-    sur2_spawn_point = spawn_sur_vehicle_by_offset(sur1_spawn_point, sur2_offset)
-    sur2_vehicle = spawn_vehicle_by_point(sur2_spawn_point,'255,0,0')
-    
 
     # 设置目的地，由于周车直行，方便设置
     DESTINATION = carla.Transform(carla.Location(sur1_spawn_point.location.x + 50, 
@@ -224,17 +212,12 @@ try:
         sur1_vehicle_speed = carla.Vector3D(x=SUR1_VEHICLE_SPEED_LON,
                                            y=SUR1_VEHICLE_SPEED_LAT,
                                            z=0)
-        
-        sur2_vehicle_speed = carla.Vector3D(x=SUR2_VEHICLE_SPEED_LON,
-                                    y=SUR2_VEHICLE_SPEED_LAT,
-                                    z=0)
 
         ego_vehicle.set_autopilot(True)
         # ego_vehicle.enable_constant_velocity(ego_vehicle_speed)
         # print('- now print the ego_vehicle speed : ',ego_vehicle.get_velocity())
         # sur1_vehicle.set_target_velocity(sur1_vehicle_speed)
         sur1_vehicle.set_autopilot(True)
-        sur2_vehicle.set_autopilot(True)
         
         # use distance to judge whether arrive the destination
         # if sur1_vehicle.get_location().distance(DESTINATION.location) < 3.0:
@@ -242,19 +225,20 @@ try:
         #     print('- arrive the destination,end of the simulation')
             
         # use time to judge whether arrive the destination
-        if time.time() - time_start > 5:
+        if time.time() - time_start > 50:
             IS_ARRIVE_DESTINATION = True
             print('- arrive the destination,end of the simulation')
             
-    # ego_vehicle.destroy()
-    # sur1_vehicle.destroy()
-    # sur2_vehicle.destroy()
+    ego_vehicle.destroy()
+    sur1_vehicle.destroy()
+
+    print('- destroy all the vehicles')
 
     
 except KeyboardInterrupt:
     ego_vehicle.destroy()
     sur1_vehicle.destroy()
-    sur2_vehicle.destroy()
+
     print('\nDone.')
     
 
